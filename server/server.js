@@ -41,21 +41,21 @@ var requestApiEvents = function() {
     if (error) { console.log('error while fetching', error); }
     if (!error && response.statusCode === 200) {
       var results = JSON.parse(body);
-      console.log(results);
 
-      
-      for(var i=0; i<results.length; i++) {
+      for(var i=1; i<results.length; i++) {
           fb.child('MeteredParkingSpots').child(results[i].meter_id + '').child('mostRecentEvent').set(results[i].event_type);
       }   
+
+      ordinalNumber = results[0].ordinal;
 
       //log calls
       console.log('Number of Calls:',++numCalls);
       console.log('Number of park events: ',results.length);
+      console.log('Ordinal Number:', ordinalNumber);
       console.log('****************logging data***************');
-
-      ordinalNumber = results[0].ordinal;
-      setTimeout( function() { console.log('Requested for events.'); requestApiEvents(); }, 1000);
     }
+    console.log('statusCode:',response.statusCode);
+    requestApiEvents();
   });
 };  //requestApiEvents ends here
 
