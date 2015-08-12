@@ -28,10 +28,13 @@ var getOrdinalNumber = function() {
     if (error) { console.log('error while fetching', error); }
     if (!error && response.statusCode === 200) {
       var results = JSON.parse(body);
-      console.log('Fetched Ordinal Number:');
-      console.log(results);
+      //console.log('Fetched Ordinal Number:');
+      //console.log(results);
       ordinalNumber = results.ordinal;
       requestApiEvents();
+    }
+    else {
+      getOrdinalNumber();
     }
   });
 }
@@ -43,9 +46,10 @@ var requestApiEvents = function() {
     if (!error && response.statusCode === 200) {
       var results = JSON.parse(body);
 
-      for(var i=1; i<results.length; i++) {
-          fb.child('MeteredParkingSpots').child(results[i].meter_id + '').child('mostRecentEvent').set(results[i].event_type);
-      }   
+      for(var i=0; i<results.length; i++) {
+        fb.child('MeteredParkingSpots').child(results[i].meter_id).child('mostRecentEvent').set(results[i].event_type);
+        fb.child('MeteredParkingSpots').child(results[i].meter_id).child('timeStamp').set(results[i].event_time);
+      }  
 
       ordinalNumber = results[0].ordinal;
 
@@ -55,8 +59,10 @@ var requestApiEvents = function() {
       console.log('Ordinal Number:', ordinalNumber);
       console.log('****************logging data***************');
     }
-    console.log('statusCode:',response.statusCode);
-    requestApiEvents();
+    if(!error) {
+      console.log('statusCode:', response.statusCode);
+    }
+    setTimeout(requestApiEvents, 10000);
   });
 };  //requestApiEvents ends here
 
