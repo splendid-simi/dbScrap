@@ -2,7 +2,6 @@ var express = require('express');
 var middleware = require('./config/middleware.js');
 var http = require('http');
 var request = require('request');
-var Q = require('Q');
 var Firebase = require('firebase');
 
 app = express();
@@ -10,7 +9,7 @@ middleware(app, express);
 
 app.set('port', process.env.PORT || 8000);
 
-app.use(express.static(__dirname + '/../client'));
+app.use(express.static(__dirname + './../client'));
 
 var latestUrl = 'https://parking.api.smgov.net/meters/events/latest';
 var ordinalUrl = 'https://parking.api.smgov.net/meters/events/since/';
