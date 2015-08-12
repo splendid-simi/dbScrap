@@ -8,7 +8,8 @@ var Firebase = require('firebase');
 app = express();
 middleware(app, express);
 
-// NOTE: still don't fully understand the necessity of `__dirname` and how it's used
+app.set('port', process.env.PORT || 8000);
+
 app.use(express.static(__dirname + '/../client'));
 
 var latestUrl = 'https://parking.api.smgov.net/meters/events/latest';
