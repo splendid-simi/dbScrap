@@ -3,6 +3,7 @@ var middleware = require('./config/middleware.js');
 var http = require('http');
 var request = require('request');
 var Firebase = require('firebase');
+var fb_link = require('../firebaselink.js');
 
 app = express();
 middleware(app, express);
@@ -18,7 +19,7 @@ var ordinalNumber = 0;
 var done = false;
 var numCalls = 0;
 
-var fb = new Firebase('https://burning-fire-1110.firebaseio.com/');
+var fb = new Firebase(fb_link.url);
 
 
 //fetch the latest ordinal number
