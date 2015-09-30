@@ -1,9 +1,7 @@
-# Basic Server to fetch events from the Santa Monica Parking API
+# dbScrape
 
-We are using this to store the data separately. The events come in between 5-10 every second.
+This repo contains a basic node server that fetches events from the Santa Monica Parking API every 10 seconds. This data is then updated in a firebase database.
 
-###IMPORTANT: If you are cloning this repo, create a file in the root directory called firebaselink.js that contains:
+### IMPORTANT: If you clone this repo, create a file in the root directory called firebaselink.js that contains:
 
 module.exports = { url: 'URL for your firebase database' }
-
-###This is so that you can link it to your firebase database.
